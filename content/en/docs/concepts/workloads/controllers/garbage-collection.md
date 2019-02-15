@@ -31,6 +31,14 @@ and CronJob.
 You can also specify relationships between owners and dependents by manually
 setting the `ownerReference` field.
 
+{{< note >}}
+Cross-namespace owner references is disallowed by design. This means: 
+1) Namespace-scoped dependents can only specify owners in the same namespace,
+and owners that are cluster-scoped.
+2) Cluster-scoped dependents can only specify cluster-scoped owners, but not
+namespace-scoped owners.
+{{< /note >}}
+
 Here's a configuration file for a ReplicaSet that has three Pods:
 
 {{< codenew file="controllers/replicaset.yaml" >}}
@@ -59,14 +67,6 @@ metadata:
     uid: d9607e19-f88f-11e6-a518-42010a800195
   ...
 ```
-
-{{< note >}}
-Cross-namespace owner references is disallowed by design. This means: 
-1) Namespace-scoped dependents can only specify owners in the same namespace,
-and owners that are cluster-scoped.
-2) Cluster-scoped dependents can only specify cluster-scoped owners, but not
-namespace-scoped owners.
-{{< /note >}}
 
 ## Controlling how the garbage collector deletes dependents
 
